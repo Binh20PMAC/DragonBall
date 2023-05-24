@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour
@@ -21,7 +19,7 @@ public class Move : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             playerRigid.velocity = transform.forward * w_speed * Time.deltaTime;
- 
+
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -45,12 +43,12 @@ public class Move : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            playerAnim.SetTrigger("walk");
+            playerAnim.SetTrigger("walkback");
             playerAnim.ResetTrigger("idle");
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
-            playerAnim.ResetTrigger("walk");
+            playerAnim.ResetTrigger("walkback");
             playerAnim.SetTrigger("idle");
         }
 
