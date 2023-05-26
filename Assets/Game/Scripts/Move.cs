@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Move : MonoBehaviour
@@ -6,10 +7,12 @@ public class Move : MonoBehaviour
     public Rigidbody playerRb;
     public Transform playerTrans;
 
-    public float w_speed, wb_speed,rn_speed,olw_speed;
+    public float w_speed, wb_speed, rn_speed, olw_speed;
     public bool walking;
     public float jumpForce = 5f;
     public bool isOnGround = true;
+
+    private bool isJump = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,19 +33,39 @@ public class Move : MonoBehaviour
             playerRb.velocity = -transform.forward * wb_speed * Time.deltaTime;
         }
     }
-     void Update()
+    void Update()
     {
         Movement();
+
+    }
+    IEnumerator WaitForSecondTouchGround()
+    {
+        yield return new WaitForSeconds(1f);
+        playerAnim.SetTrigger("idle");
+        playerAnim.ResetTrigger("jump");
+        isOnGround = true;
+        isJump = false;
+    }
+
+    IEnumerator WaitForSecondReadyJump()
+    {
+        playerAnim.SetTrigger("jump");
+        playerAnim.ResetTrigger("idle");
+        isOnGround = false;
+        isJump = true;
+        yield return new WaitForSeconds(0.5f);
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+ 
     }
     void Movement()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !isJump)
         {
             playerAnim.SetTrigger("walk");
             playerAnim.ResetTrigger("idle");
             walking = true;
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D) && !isJump)
         {
             playerAnim.ResetTrigger("walk");
             playerAnim.SetTrigger("idle");
@@ -65,7 +88,7 @@ public class Move : MonoBehaviour
                 w_speed = w_speed + rn_speed;
                 playerAnim.SetTrigger("run");
                 playerAnim.ResetTrigger("walk");
-            } 
+            }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 w_speed = olw_speed;
@@ -73,19 +96,16 @@ public class Move : MonoBehaviour
                 playerAnim.SetTrigger("walk");
             }
         }
-        if (Input.GetKeyDown(KeyCode.W)&&isOnGround)
+        if (Input.GetKeyDown(KeyCode.W) && isOnGround)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            playerAnim.SetTrigger("jump");
-            //playerAnim.ResetTrigger("idle");
-            isOnGround = false;
-        }
+            StartCoroutine(WaitForSecondReadyJump());
+        }  
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && isJump)
         {
-            isOnGround = true;
+            StartCoroutine(WaitForSecondTouchGround());
         }
     }
 }
