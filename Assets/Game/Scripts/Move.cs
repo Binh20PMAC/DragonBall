@@ -3,28 +3,35 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public Animator playerAnim;
-    public Rigidbody playerRigid;
-    public float w_speed, wb_speed;
-    public bool walking;
+    public Rigidbody playerRb;
     public Transform playerTrans;
+
+    public float w_speed, wb_speed,rn_speed,olw_speed;
+    public bool walking;
+    public float jumpForce = 5f;
+    public bool isOnGround = true;
     // Start is called before the first frame update
     void Start()
     {
+        playerRb = GetComponent<Rigidbody>();
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.D))
         {
-            playerRigid.velocity = transform.forward * w_speed * Time.deltaTime;
+            playerRb.velocity = transform.forward * w_speed * Time.deltaTime;
 
         }
         if (Input.GetKey(KeyCode.A))
         {
-            playerRigid.velocity = -transform.forward * wb_speed * Time.deltaTime;
+            playerRb.velocity = -transform.forward * wb_speed * Time.deltaTime;
         }
+    }
+     void Update()
+    {
         Movement();
     }
     void Movement()
@@ -51,6 +58,34 @@ public class Move : MonoBehaviour
             playerAnim.ResetTrigger("walkback");
             playerAnim.SetTrigger("idle");
         }
-
+        if (walking == true)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                w_speed = w_speed + rn_speed;
+                playerAnim.SetTrigger("run");
+                playerAnim.ResetTrigger("walk");
+            } 
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                w_speed = olw_speed;
+                playerAnim.ResetTrigger("run");
+                playerAnim.SetTrigger("walk");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.W)&&isOnGround)
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerAnim.SetTrigger("jump");
+            //playerAnim.ResetTrigger("idle");
+            isOnGround = false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
     }
 }
