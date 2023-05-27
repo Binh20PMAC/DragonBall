@@ -40,7 +40,11 @@ public class Move : MonoBehaviour
     }
     IEnumerator WaitForSecondTouchGround()
     {
+<<<<<<< HEAD
         yield return new WaitForSeconds(0f);
+=======
+        yield return new WaitForSeconds(1f);
+>>>>>>> 1e7db8823daa39ad27d3dee16728863084c31ad5
         playerAnim.SetTrigger("idle");
         playerAnim.ResetTrigger("jump");
         isOnGround = true;
@@ -100,6 +104,7 @@ public class Move : MonoBehaviour
                 playerAnim.SetTrigger("walk");
             }
         }
+<<<<<<< HEAD
         if(walking==false)
         {
             w_speed = 120;
@@ -120,6 +125,12 @@ public class Move : MonoBehaviour
             playerAnim.ResetTrigger("attack2");
             playerAnim.SetTrigger("idle");
         }
+=======
+        if (Input.GetKeyDown(KeyCode.W) && isOnGround)
+        {
+            StartCoroutine(WaitForSecondReadyJump());
+        }  
+>>>>>>> 1e7db8823daa39ad27d3dee16728863084c31ad5
     }
     private void OnCollisionEnter(Collision collision)
     {
