@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Move : MonoBehaviour
@@ -6,10 +7,12 @@ public class Move : MonoBehaviour
     public Rigidbody playerRb;
     public Transform playerTrans;
 
-    public float w_speed, wb_speed,rn_speed,olw_speed;
+    public float w_speed, wb_speed, rn_speed, olw_speed;
     public bool walking;
     public float jumpForce = 5f;
     public bool isOnGround = true;
+
+    private bool isJump = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,30 +33,53 @@ public class Move : MonoBehaviour
             playerRb.velocity = -transform.forward * wb_speed * Time.deltaTime;
         }
     }
-     void Update()
+    void Update()
     {
         Movement();
+
+    }
+    IEnumerator WaitForSecondTouchGround()
+    {
+        yield return new WaitForSeconds(0f);
+        playerAnim.SetTrigger("idle");
+        playerAnim.ResetTrigger("jump");
+        isOnGround = true;
+        isJump = false;
+    }
+
+    IEnumerator WaitForSecondReadyJump()
+    {
+        playerAnim.SetTrigger("jump");
+        playerAnim.ResetTrigger("idle");
+        isOnGround = false;
+        isJump = true;
+        yield return new WaitForSeconds(0.5f);
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+ 
     }
     void Movement()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !isJump)
         {
             playerAnim.SetTrigger("walk");
             playerAnim.ResetTrigger("idle");
             walking = true;
+            
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D) && !isJump)
         {
             playerAnim.ResetTrigger("walk");
             playerAnim.SetTrigger("idle");
             walking = false;
+            
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A)&& !isJump)
         {
             playerAnim.SetTrigger("walkback");
             playerAnim.ResetTrigger("idle");
+            
         }
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A)&& !isJump)
         {
             playerAnim.ResetTrigger("walkback");
             playerAnim.SetTrigger("idle");
@@ -65,27 +91,41 @@ public class Move : MonoBehaviour
                 w_speed = w_speed + rn_speed;
                 playerAnim.SetTrigger("run");
                 playerAnim.ResetTrigger("walk");
-            } 
+            }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                w_speed = olw_speed;
+                Debug.Log("1");
+                w_speed = 120;
                 playerAnim.ResetTrigger("run");
                 playerAnim.SetTrigger("walk");
             }
         }
-        if (Input.GetKeyDown(KeyCode.W)&&isOnGround)
+        if(walking==false)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            playerAnim.SetTrigger("jump");
-            //playerAnim.ResetTrigger("idle");
-            isOnGround = false;
+            w_speed = 120;
+        }
+        if (Input.GetKeyDown(KeyCode.W) && isOnGround)
+        {
+            StartCoroutine(WaitForSecondReadyJump());
+        }  
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            playerAnim.SetTrigger("attack1");
+            playerAnim.SetTrigger("attack2");
+            playerAnim.ResetTrigger("idle");
+        }
+        if(Input.GetKeyUp(KeyCode.E))
+        {
+            playerAnim.ResetTrigger("attack1");
+            playerAnim.ResetTrigger("attack2");
+            playerAnim.SetTrigger("idle");
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && isJump)
         {
-            isOnGround = true;
+            StartCoroutine(WaitForSecondTouchGround());
         }
     }
 }
