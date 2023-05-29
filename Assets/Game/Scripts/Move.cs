@@ -21,20 +21,29 @@ public class Move : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    //void FixedUpdate()
+    //{
+    //    if (Input.GetKey(KeyCode.D))
+    //    {
+    //        playerRb.velocity = transform.forward * w_speed * Time.deltaTime;
+
+    //    }
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        playerRb.velocity = -transform.forward * wb_speed * Time.deltaTime;
+    //    }
+    //}
+    void Update()
     {
         if (Input.GetKey(KeyCode.D))
         {
-            playerRb.velocity = transform.forward * w_speed * Time.deltaTime;
+            transform.Translate(w_speed, 0, 0, 0);
 
         }
         if (Input.GetKey(KeyCode.A))
         {
-            playerRb.velocity = -transform.forward * wb_speed * Time.deltaTime;
+            transform.Translate(-w_speed, 0, 0, 0);
         }
-    }
-    void Update()
-    {
         Movement();
 
     }
@@ -54,8 +63,9 @@ public class Move : MonoBehaviour
         isOnGround = false;
         isJump = true;
         yield return new WaitForSeconds(0.5f);
-        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
- 
+        //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+        playerRb.AddForce(transform.up * jumpForce);
+        
     }
     void Movement()
     {
@@ -95,14 +105,20 @@ public class Move : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 Debug.Log("1");
-                w_speed = 120;
+                //w_speed = 120;
+                w_speed = 0.05f;
                 playerAnim.ResetTrigger("run");
                 playerAnim.SetTrigger("walk");
             }
         }
         if(walking==false)
         {
-            w_speed = 120;
+            //w_speed = 120;
+            w_speed = 0.05f;
+        }
+        if (isJump)
+        {
+            walking = false;
         }
         if (Input.GetKeyDown(KeyCode.W) && isOnGround)
         {
