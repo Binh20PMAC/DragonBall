@@ -6,13 +6,14 @@ public class AttackUniversal : MonoBehaviour
 {
     public LayerMask collisionLayer;
     public float radius = 1f;
-    public float damage = 2f;
+    public float damage = 10f;
     public bool isPlayer,isEnemy;
     public GameObject hit_FX;
     void Update()
     {
         DetectCollision();
     }
+    //Xu ly va cham
     void DetectCollision()
     {
         Collider[]hit=Physics.OverlapSphere(transform.position,radius,collisionLayer); 
@@ -32,6 +33,14 @@ public class AttackUniversal : MonoBehaviour
                     hitFX_Pos.x -= 0.3f;
                 }
                 Instantiate(hit_FX,hitFX_Pos,Quaternion.identity);
+                if (gameObject.tag == "RightArm" || gameObject.tag=="RightLeg")
+                {
+                    hit[0].GetComponent<HealthScript>().ApplyDamege(damage, true);
+                }
+                else
+                {
+                    hit[0].GetComponent<HealthScript>().ApplyDamege(damage, false);
+                }
             }
             gameObject.SetActive(false);
         }

@@ -6,18 +6,27 @@ public class Move : MonoBehaviour
     public Animator playerAnim;
     public Rigidbody playerRb;
     public Transform playerTrans;
+    public Transform targetEnemy;
 
-    public float w_speed, wb_speed, rn_speed, olw_speed;
+    public float w_speed, wb_speed, rn_speed;
     public bool walking;
     public float jumpForce = 5f;
     public bool isOnGround = true;
-
     private bool isJump = false;
+    public bool isFlipped = false;
+    //!!!!!!//////
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
     // Start is called before the first frame update
+   
+    
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-
+        //
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -44,8 +53,26 @@ public class Move : MonoBehaviour
         {
             transform.Translate(-w_speed, 0, 0, 0);
         }
-        Movement();
 
+        Movement();
+        //xoay nhan vat
+        if (targetEnemy != null)
+        {
+            Vector3 targetDirection = targetEnemy.position - playerTrans.transform.position;
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+
+            // Xoay "CharacterContainer"
+            if (angle > 90 || angle < -90)
+            {
+                playerTrans.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
+                isFlipped = true;
+            }
+            else
+            {
+                playerTrans.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                isFlipped=false;
+            }
+        }
     }
     IEnumerator WaitForSecondTouchGround()
     {
@@ -71,40 +98,81 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D) && !isJump)
         {
-            playerAnim.SetTrigger("walk");
+            if (isFlipped)
+            {
+                playerAnim.SetTrigger("walkback");
+                walking = false;
+            }
+            else
+            {
+                playerAnim.SetTrigger("walk");
+                walking = true;
+            }
             playerAnim.ResetTrigger("idle");
-            walking = true;
+            
             
         }
         if (Input.GetKeyUp(KeyCode.D) && !isJump)
         {
-            playerAnim.ResetTrigger("walk");
+            if (isFlipped)
+            {
+                playerAnim.ResetTrigger("walkback");
+                walking = true;
+            }
+            else
+            {
+                playerAnim.ResetTrigger("walk"); 
+                walking = false;
+            }
             playerAnim.SetTrigger("idle");
-            walking = false;
+           
             
         }
         if (Input.GetKeyDown(KeyCode.A)&& !isJump)
         {
-            playerAnim.SetTrigger("walkback");
+            if (isFlipped)
+            {
+                playerAnim.SetTrigger("walk");
+            }
+            else
+            {
+                playerAnim.SetTrigger("walkback");
+            }
             playerAnim.ResetTrigger("idle");
             
         }
         if (Input.GetKeyUp(KeyCode.A)&& !isJump)
         {
-            playerAnim.ResetTrigger("walkback");
+            if (isFlipped)
+            {
+                playerAnim.ResetTrigger("walk");
+            }
+            else
+            {
+                playerAnim.ResetTrigger("walkback");
+            }
             playerAnim.SetTrigger("idle");
         }
         if (walking == true)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                w_speed = w_speed + rn_speed;
-                playerAnim.SetTrigger("run");
-                playerAnim.ResetTrigger("walk");
+                if (isFlipped)
+                {
+                    w_speed = w_speed + rn_speed;
+                    playerAnim.SetTrigger("run");
+                    playerAnim.ResetTrigger("walk");
+                }
+                else
+                {
+                    w_speed = w_speed + rn_speed;
+                    playerAnim.SetTrigger("run");
+                    playerAnim.ResetTrigger("walk");
+                }
             }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                Debug.Log("1");
+                //Debug.Log("1");
                 //w_speed = 120;
                 w_speed = 0.05f;
                 playerAnim.ResetTrigger("run");
@@ -136,6 +204,11 @@ public class Move : MonoBehaviour
             playerAnim.ResetTrigger("attack2");
             playerAnim.SetTrigger("idle");
         }
+        ///!!/////////
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamge(20);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -143,5 +216,11 @@ public class Move : MonoBehaviour
         {
             StartCoroutine(WaitForSecondTouchGround());
         }
+    }
+   //!!!!!!!!!!!!///////////////////
+    void TakeDamge(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
     }
 }
