@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - RightArm
+  - HealthUI
+  - EnemyHealthUI
   layers:
   - Default
   - TransparentFX

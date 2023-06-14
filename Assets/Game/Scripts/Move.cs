@@ -14,19 +14,13 @@ public class Move : MonoBehaviour
     public bool isOnGround = true;
     private bool isJump = false;
     public bool isFlipped = false;
-    //!!!!!!//////
-    public int maxHealth = 100;
-    public int currentHealth;
-    public HealthBar healthBar;
+
     // Start is called before the first frame update
    
     
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        //
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -174,7 +168,7 @@ public class Move : MonoBehaviour
             {
                 //Debug.Log("1");
                 //w_speed = 120;
-                w_speed = 0.05f;
+                w_speed = 0.03f;
                 playerAnim.ResetTrigger("run");
                 playerAnim.SetTrigger("walk");
             }
@@ -182,7 +176,7 @@ public class Move : MonoBehaviour
         if(walking==false)
         {
             //w_speed = 120;
-            w_speed = 0.05f;
+            w_speed = 0.03f;
         }
         if (isJump)
         {
@@ -204,11 +198,6 @@ public class Move : MonoBehaviour
             playerAnim.ResetTrigger("attack2");
             playerAnim.SetTrigger("idle");
         }
-        ///!!/////////
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamge(20);
-        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -216,11 +205,5 @@ public class Move : MonoBehaviour
         {
             StartCoroutine(WaitForSecondTouchGround());
         }
-    }
-   //!!!!!!!!!!!!///////////////////
-    void TakeDamge(int damage)
-    {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
     }
 }

@@ -8,37 +8,40 @@ public class HealthScript : MonoBehaviour
     public float health = 100f;
     private bool characterDied;
     public bool is_Player;
-   
-    public void ApplyDamege(float damage,bool knockDown)
+     private HealthUI health_UI;
+    private HealthUI enemyHealthUI;
+
+    void Awake()
+    {
+        if (is_Player)
+        {
+            health_UI = GetComponent<HealthUI>();
+        }
+        else
+        {
+            enemyHealthUI = GetComponent<HealthUI>();
+        }
+    }
+    public void ApplyDamage(float damage,bool knockDown)
     {
         if (characterDied)
             return;
+
         health -= damage;
-        if(health <= 0f)
+
+        if (is_Player)
+        {
+            health_UI.DisplayHealth(health,true);
+        }
+        else
+        {
+            enemyHealthUI.DisplayHealth(health,false);
+        }
+
+        if (health <= 0f)
         {
             playerAnim.SetTrigger("died");
             characterDied = true;
-            if (is_Player)
-            {
-
-            }return;
-        }
-        if (!is_Player)
-        {
-            if (knockDown)
-            {
-                if (Random.Range(0, 2) > 0)
-                {
-                    playerAnim.SetTrigger("died");
-                }
-            }
-            else
-            {
-                if (Random.Range(0, 3) > 1)
-                {
-                    playerAnim.SetTrigger("hit");
-                }
-            }
         }
     }
 }
