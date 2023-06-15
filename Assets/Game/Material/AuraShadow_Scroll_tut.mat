@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AuraShadow_Scroll_tut
-  m_Shader: {fileID: -6465566751694194690, guid: ed15dcbb22d81ba49ab7d15de83e833f, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 9293261542c11e8418889d65c00c1f98, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHATEST_ON
