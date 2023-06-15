@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Aura01_Scroll_tutGroundWind01_Scroll_tut 1
+  m_Name: Aura01_Scroll_tut
   m_Shader: {fileID: -6465566751694194690, guid: cb3a4e5078cf2ca4687f836b7281c456, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
