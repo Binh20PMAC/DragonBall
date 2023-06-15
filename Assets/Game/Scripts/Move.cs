@@ -1,5 +1,14 @@
 using System.Collections;
 using UnityEngine;
+public enum ComboState
+{
+    none,
+    attack1,
+    attack2,
+    attack3,
+    attack4,
+    attack5,
+}
 
 public class Move : MonoBehaviour
 {
@@ -7,6 +16,10 @@ public class Move : MonoBehaviour
     public Rigidbody playerRb;
     public Transform playerTrans;
     public Transform targetEnemy;
+    private bool activateTimerToReset;
+    private float default_combo_timer = 0.4f;
+    private float current_combo_timer;
+    private ComboState current_combo_state;
 
     public float w_speed, wb_speed, rn_speed;
     public bool walking;
@@ -16,11 +29,11 @@ public class Move : MonoBehaviour
     public bool isFlipped = false;
 
     // Start is called before the first frame update
-   
-    
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        current_combo_timer = default_combo_timer;
+        current_combo_state = ComboState.none;
     }
 
     // Update is called once per frame
@@ -49,6 +62,8 @@ public class Move : MonoBehaviour
         }
 
         Movement();
+        ComboAttacks();
+        ResetComboState();
         //xoay nhan vat
         if (targetEnemy != null)
         {
@@ -67,26 +82,6 @@ public class Move : MonoBehaviour
                 isFlipped=false;
             }
         }
-    }
-    IEnumerator WaitForSecondTouchGround()
-    {
-        yield return new WaitForSeconds(0f);
-        playerAnim.SetTrigger("idle");
-        playerAnim.ResetTrigger("jump");
-        isOnGround = true;
-        isJump = false;
-    }
-
-    IEnumerator WaitForSecondReadyJump()
-    {
-        playerAnim.SetTrigger("jump");
-        playerAnim.ResetTrigger("idle");
-        isOnGround = false;
-        isJump = true;
-        yield return new WaitForSeconds(0.5f);
-        //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
-        playerRb.AddForce(transform.up * jumpForce);
-        
     }
     void Movement()
     {
@@ -186,17 +181,70 @@ public class Move : MonoBehaviour
         {
             StartCoroutine(WaitForSecondReadyJump());
         }  
-        if(Input.GetKeyDown(KeyCode.E))
+     
+    }
+    void ComboAttacks()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            playerAnim.SetTrigger("attack1");
-            playerAnim.SetTrigger("attack2");
-            playerAnim.ResetTrigger("idle");
+            if (current_combo_state == ComboState.attack3 ||
+                current_combo_state == ComboState.attack4 ||
+                current_combo_state == ComboState.attack5)
+                return;
+            current_combo_state++;
+            activateTimerToReset = true;
+            current_combo_timer = default_combo_timer;
+            if (current_combo_state == ComboState.attack1)
+            {
+                playerAnim.SetTrigger("attack1");
+            } 
+            if (current_combo_state == ComboState.attack2)
+            {
+                playerAnim.SetTrigger("attack2");
+            }
+            if (current_combo_state == ComboState.attack3)
+            {
+                playerAnim.SetTrigger("attack3");
+            }
         }
-        if(Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            playerAnim.ResetTrigger("attack1");
-            playerAnim.ResetTrigger("attack2");
-            playerAnim.SetTrigger("idle");
+            if (current_combo_state == ComboState.attack5 ||
+                current_combo_state == ComboState.attack3)
+                return;
+            if(current_combo_state == ComboState.none||
+                current_combo_state==ComboState.attack1||
+                current_combo_state == ComboState.attack2)
+            {
+                current_combo_state = ComboState.attack4;
+            }
+            else if(current_combo_state == ComboState.attack4)
+            {
+                current_combo_state++;
+            }
+            activateTimerToReset = true;
+            current_combo_timer = default_combo_timer;
+            if (current_combo_state == ComboState.attack4)
+            {
+                playerAnim.SetTrigger("attack4");
+            }
+            if (current_combo_state == ComboState.attack5)
+            {
+                playerAnim.SetTrigger("attack5");
+            }
+        }
+    }
+    void ResetComboState()
+    {
+        if (activateTimerToReset)
+        {
+            current_combo_timer -= Time.deltaTime;
+            if(current_combo_timer <= 0f)
+            {
+                current_combo_state = ComboState.none;
+                activateTimerToReset = false;
+                current_combo_timer = default_combo_timer;
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -205,5 +253,25 @@ public class Move : MonoBehaviour
         {
             StartCoroutine(WaitForSecondTouchGround());
         }
+    }
+    IEnumerator WaitForSecondTouchGround()
+    {
+        yield return new WaitForSeconds(0f);
+        playerAnim.SetTrigger("idle");
+        playerAnim.ResetTrigger("jump");
+        isOnGround = true;
+        isJump = false;
+    }
+
+    IEnumerator WaitForSecondReadyJump()
+    {
+        playerAnim.SetTrigger("jump");
+        playerAnim.ResetTrigger("idle");
+        isOnGround = false;
+        isJump = true;
+        yield return new WaitForSeconds(0.5f);
+        //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+        playerRb.AddForce(transform.up * jumpForce);
+
     }
 }
