@@ -53,12 +53,12 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(w_speed, 0, 0, 0);
+            transform.Translate(w_speed*Time.deltaTime, 0, 0, 0);
 
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-w_speed, 0, 0, 0);
+            transform.Translate(-w_speed * Time.deltaTime, 0, 0, 0);
         }
 
         Movement();
@@ -98,8 +98,6 @@ public class Move : MonoBehaviour
                 walking = true;
             }
             playerAnim.ResetTrigger("idle");
-            
-            
         }
         if (Input.GetKeyUp(KeyCode.D) && !isJump)
         {
@@ -114,8 +112,6 @@ public class Move : MonoBehaviour
                 walking = false;
             }
             playerAnim.SetTrigger("idle");
-           
-            
         }
         if (Input.GetKeyDown(KeyCode.A)&& !isJump)
         {
@@ -163,7 +159,7 @@ public class Move : MonoBehaviour
             {
                 //Debug.Log("1");
                 //w_speed = 120;
-                w_speed = 0.03f;
+                w_speed = 3f;
                 playerAnim.ResetTrigger("run");
                 playerAnim.SetTrigger("walk");
             }
@@ -171,7 +167,7 @@ public class Move : MonoBehaviour
         if(walking==false)
         {
             //w_speed = 120;
-            w_speed = 0.03f;
+            w_speed = 3f;
         }
         if (isJump)
         {
@@ -180,8 +176,12 @@ public class Move : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && isOnGround)
         {
             StartCoroutine(WaitForSecondReadyJump());
-        }  
-     
+        }
+        //
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            playerAnim.SetTrigger("ki");
+        }
     }
     void ComboAttacks()
     {
@@ -262,7 +262,6 @@ public class Move : MonoBehaviour
         isOnGround = true;
         isJump = false;
     }
-
     IEnumerator WaitForSecondReadyJump()
     {
         playerAnim.SetTrigger("jump");
@@ -272,6 +271,5 @@ public class Move : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
         playerRb.AddForce(transform.up * jumpForce);
-
     }
 }
