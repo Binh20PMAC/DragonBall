@@ -22,7 +22,7 @@ public class Move : MonoBehaviour
     public Transform playerTrans;
     public Transform targetEnemy;
     private bool activateTimerToReset;
-    private float default_combo_timer = 0.4f;
+    private float default_combo_timer = 1f;
     private float current_combo_timer;
     private ComboState current_combo_state;
     public AnimatorStateInfo stateInfo;
@@ -238,6 +238,7 @@ public class Move : MonoBehaviour
             current_combo_state++;
             activateTimerToReset = true;
             current_combo_timer = default_combo_timer;
+
             if (current_combo_state == ComboState.attack1)
             {
                 playerAnim.SetTrigger("attack1");

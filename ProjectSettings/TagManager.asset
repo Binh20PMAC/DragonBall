@@ -8,6 +8,8 @@ TagManager:
   - RightArm
   - HealthUI
   - EnemyHealthUI
+  - EnergyUI
+  - EnemyEnergyUI
   layers:
   - Default
   - TransparentFX
