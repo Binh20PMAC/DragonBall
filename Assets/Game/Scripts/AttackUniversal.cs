@@ -7,7 +7,7 @@ public class AttackUniversal : MonoBehaviour
     public LayerMask collisionLayer;
     public float radius = 1f;
     public float damage = 10f;
-    public bool isPlayer,isEnemy;
+    public bool isPlayer, isEnemy;
     public GameObject hit_FX;
     void Update()
     {
@@ -16,7 +16,7 @@ public class AttackUniversal : MonoBehaviour
     //Xu ly va cham
     void DetectCollision()
     {
-        Collider[]hit=Physics.OverlapSphere(transform.position,radius,collisionLayer); 
+        Collider[] hit = Physics.OverlapSphere(transform.position, radius, collisionLayer);
         if (hit.Length > 0)
         {
             // print("Hit the" + hit[0].gameObject.name);
