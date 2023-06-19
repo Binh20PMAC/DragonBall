@@ -13,13 +13,16 @@ public class CharacterController : MonoBehaviour
     public Transform playerTrans;
     public Transform targetEnemy;
     private bool activateTimerToReset;
-    private float default_combo_timer = 1f;
+    private float default_combo_timer = 2f;
     private float current_combo_timer;
     private ComboState current_combo_state;
     public AnimatorStateInfo stateInfo;
 
     public float w_speed, wb_speed, rn_speed;
-    public bool walking;
+    public bool isWalking;
+    public bool isWalkingBack = false;
+    private bool isRunning = false;
+
     public float jumpForce = 5f;
     public bool isOnGround = true;
     private bool isJump = false;
@@ -101,108 +104,84 @@ public class CharacterController : MonoBehaviour
     }
     void Movement()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !isJump)
         {
             transform.Translate(w_speed * Time.deltaTime, 0, 0, 0);
 
+            if (isFlipped)
+            {
+                playerAnim.SetTrigger("walkback");
+                isWalking = false;
+            }
+            else
+            {
+                playerAnim.SetTrigger("walk");
+                isWalking = true;
+            }
+            playerAnim.ResetTrigger("idle");
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && !isJump)
         {
             transform.Translate(-w_speed * Time.deltaTime, 0, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.D) && !isJump)
-        {
-            if (isFlipped)
-            {
-                playerAnim.SetTrigger("walkback");
-                walking = false;
-            }
-            else
-            {
-                playerAnim.SetTrigger("walk");
-                walking = true;
-            }
-            playerAnim.ResetTrigger("idle");
-        }
-        if (Input.GetKeyUp(KeyCode.D) && !isJump)
-        {
-            if (isFlipped)
-            {
-                playerAnim.ResetTrigger("walkback");
-                walking = true;
-            }
-            else
-            {
-                playerAnim.ResetTrigger("walk");
-                walking = false;
-            }
-            playerAnim.SetTrigger("idle");
-        }
-        if (Input.GetKeyDown(KeyCode.A) && !isJump)
-        {
-            if (isFlipped)
-            {
-                playerAnim.SetTrigger("walk");
-            }
-            else
-            {
-                playerAnim.SetTrigger("walkback");
-            }
-            playerAnim.ResetTrigger("idle");
 
+            if (isFlipped)
+            {
+                playerAnim.SetTrigger("walk");
+            }
+            else
+            {
+                playerAnim.SetTrigger("walkback");
+            }
+            playerAnim.ResetTrigger("idle");
         }
-        if (Input.GetKeyUp(KeyCode.A) && !isJump)
+        else if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && !isJump)
         {
             if (isFlipped)
             {
+                playerAnim.ResetTrigger("walkback");
+                isWalking = true;
+            }
+            else
+            {
+                playerAnim.ResetTrigger("walk");
+                isWalking = false;
+            }
+            playerAnim.SetTrigger("idle");
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKey(KeyCode.D) && !isJump)
+            {
+                isRunning = true;
+                w_speed = w_speed + rn_speed;
+                playerAnim.SetTrigger("run");
                 playerAnim.ResetTrigger("walk");
             }
             else
             {
-                playerAnim.ResetTrigger("walkback");
-            }
-            playerAnim.SetTrigger("idle");
-        }
-        if (walking == true)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                if (isFlipped)
-                {
-                    w_speed = w_speed + rn_speed;
-                    playerAnim.SetTrigger("run");
-                    playerAnim.ResetTrigger("walk");
-                }
-                else
-                {
-                    w_speed = w_speed + rn_speed;
-                    playerAnim.SetTrigger("run");
-                    playerAnim.ResetTrigger("walk");
-                }
-            }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                //Debug.Log("1");
-                //w_speed = 120;
-                w_speed = 3f;
-                playerAnim.ResetTrigger("run");
-                playerAnim.SetTrigger("walk");
+                isRunning = false;
             }
         }
-        if (walking == false)
+        else
         {
-            //w_speed = 120;
+            isRunning = false;
+        }
+
+        if (!isRunning)
+        {
             w_speed = 3f;
         }
+
         if (isJump)
         {
-            walking = false;
+            isWalking = false;
         }
+
         if (Input.GetKeyDown(KeyCode.W) && isOnGround)
         {
             StartCoroutine(WaitForSecondReadyJump());
         }
-
     }
     protected void Ki()
     {
