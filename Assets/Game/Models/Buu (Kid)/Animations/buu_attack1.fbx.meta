@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aee5e4622fad6534bb08eb33ce12ffe8
+guid: da2d3c25ecac636438c54638f2dbb5e3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,83 +7,73 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: band
-    second: {fileID: 2100000, guid: 0d3fcbd295e07d14ab2fa764f2bd8b9b, type: 2}
+      name: belt_a
+    second: {fileID: 2100000, guid: a62de422a609fb3439264e80d6167969, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: boots_A
-    second: {fileID: 2100000, guid: 3effbfbcaf18407428309b7d69583e0a, type: 2}
+      name: belt_b
+    second: {fileID: 2100000, guid: 4cb58d4b9fa471a4283c305dbe9e53a5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: boots_B
-    second: {fileID: 2100000, guid: 369265575446f9a4e98912dd77ef14ab, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: dougi
-    second: {fileID: 2100000, guid: ee3789b6ec78fd045875204fc5c58a0a, type: 2}
+      name: boots
+    second: {fileID: 2100000, guid: a48cd7f6047bc394794b5447df99ea49, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eye_L
-    second: {fileID: 2100000, guid: e30474ae1d827644ab41aa950dd2309d, type: 2}
+    second: {fileID: 2100000, guid: c5b3f5079ee825f48a6a629c2e48c108, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eye_R
-    second: {fileID: 2100000, guid: 14a5941fc1228984189ec1927c8cd0be, type: 2}
+    second: {fileID: 2100000, guid: 08ebeebcde75ed24096500fd13600bcb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: eyebrows
-    second: {fileID: 2100000, guid: 34b0497c1f0a33143aac2de338606bbc, type: 2}
+      name: face
+    second: {fileID: 2100000, guid: 65d69992686720643ad5ad73ca07094f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: hair
-    second: {fileID: 2100000, guid: 79d46d9c807ddb44081add124f468033, type: 2}
+      name: glove_a
+    second: {fileID: 2100000, guid: a4e93adb79326b34785168a2110dd11f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: mouth
-    second: {fileID: 2100000, guid: a2b095f508dbe8748b2ecb8fa0b54935, type: 2}
+      name: glove_b
+    second: {fileID: 2100000, guid: d5417e1339f85224e951fb9b5334b0ef, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: obi
-    second: {fileID: 2100000, guid: f740383532b661a47ba895b7990aad8b, type: 2}
+      name: hand
+    second: {fileID: 2100000, guid: 0707ace958a84fb4eb7e79e0927cf8d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leg_a
+    second: {fileID: 2100000, guid: 93dd0da15412b4549810cc3b4075d1c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leg_b
+    second: {fileID: 2100000, guid: e229634027a2d1c4b82cb31dda6dfe04, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: nail
+    second: {fileID: 2100000, guid: 1c0a224048358a843b49421718a33ac7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pants
-    second: {fileID: 2100000, guid: b83f0db78721f7646ab00f013fdf99a0, type: 2}
+    second: {fileID: 2100000, guid: 93b57b6c8069d234bbb0dc1c9d98ea9e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: skin_bust
-    second: {fileID: 2100000, guid: 860ed085b9598fb4b9a4b8757513d6d2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: skin_face
-    second: {fileID: 2100000, guid: 24ce1296edb271743af6385e7b75fba8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: skin_hand
-    second: {fileID: 2100000, guid: c1ad6248e5e6c684c912ef78ddfe69ad, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tongue
-    second: {fileID: 2100000, guid: 258c3127dc7dec140873120ead585e9b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tooth
-    second: {fileID: 2100000, guid: f9dfc4d6a75ef324ba61865d0f50c0e7, type: 2}
+      name: skin
+    second: {fileID: 2100000, guid: 5c63211a64c993a4695b887ac2777bf2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

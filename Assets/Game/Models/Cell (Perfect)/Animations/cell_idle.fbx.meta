@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aee5e4622fad6534bb08eb33ce12ffe8
+guid: 36df16e851dc2b54ca5423db8cd46094
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,83 +7,118 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: band
-    second: {fileID: 2100000, guid: 0d3fcbd295e07d14ab2fa764f2bd8b9b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: boots_A
-    second: {fileID: 2100000, guid: 3effbfbcaf18407428309b7d69583e0a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: boots_B
-    second: {fileID: 2100000, guid: 369265575446f9a4e98912dd77ef14ab, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: dougi
-    second: {fileID: 2100000, guid: ee3789b6ec78fd045875204fc5c58a0a, type: 2}
+      name: boots
+    second: {fileID: 2100000, guid: f4ad927d65b7f5e4ea8671b8cd3d72ee, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eye_L
-    second: {fileID: 2100000, guid: e30474ae1d827644ab41aa950dd2309d, type: 2}
+    second: {fileID: 2100000, guid: 4140fbce7a9a24849aec800fc768ce84, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eye_R
-    second: {fileID: 2100000, guid: 14a5941fc1228984189ec1927c8cd0be, type: 2}
+    second: {fileID: 2100000, guid: 00271b52caf16cb448f2982c06ee263b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: eyebrows
-    second: {fileID: 2100000, guid: 34b0497c1f0a33143aac2de338606bbc, type: 2}
+      name: head_A
+    second: {fileID: 2100000, guid: d19c7f758cc190f4ab5a975cdef956d6, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: hair
-    second: {fileID: 2100000, guid: 79d46d9c807ddb44081add124f468033, type: 2}
+      name: head_B
+    second: {fileID: 2100000, guid: cb42f52d9d8f2454b948aa2334618d70, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: mouth
-    second: {fileID: 2100000, guid: a2b095f508dbe8748b2ecb8fa0b54935, type: 2}
+      name: head_C
+    second: {fileID: 2100000, guid: 9ce14fe64c0bf2f4b8d9a183a22ff849, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: obi
-    second: {fileID: 2100000, guid: f740383532b661a47ba895b7990aad8b, type: 2}
+      name: nail
+    second: {fileID: 2100000, guid: 44c00175a114c754f83e6b5c83fb4028, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pants
-    second: {fileID: 2100000, guid: b83f0db78721f7646ab00f013fdf99a0, type: 2}
+      name: skin_bustA
+    second: {fileID: 2100000, guid: 44c52f6f67dd2f1468b061fbccf0aae7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: skin_bust
-    second: {fileID: 2100000, guid: 860ed085b9598fb4b9a4b8757513d6d2, type: 2}
+      name: skin_bustB
+    second: {fileID: 2100000, guid: 2db2db7be557b2c41bcd89eb5b2b734c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: skin_face
-    second: {fileID: 2100000, guid: 24ce1296edb271743af6385e7b75fba8, type: 2}
+      name: skin_bustC
+    second: {fileID: 2100000, guid: 949947a2eaa5aa043a22316192c1dacc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_bustD
+    second: {fileID: 2100000, guid: 96d76338fa76a4e4381b8d6236c0c761, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_faceA
+    second: {fileID: 2100000, guid: 50b6792057dde62488b1da84a7ba056d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_faceB
+    second: {fileID: 2100000, guid: 6189aa4acb369464f9d3eccfc4591783, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_faceC
+    second: {fileID: 2100000, guid: 8c27b1113982bb447b783de9011648ac, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: skin_hand
-    second: {fileID: 2100000, guid: c1ad6248e5e6c684c912ef78ddfe69ad, type: 2}
+    second: {fileID: 2100000, guid: 78d3571f7c72e2d4087e5d890c5aa28b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: tongue
-    second: {fileID: 2100000, guid: 258c3127dc7dec140873120ead585e9b, type: 2}
+      name: skin_legA
+    second: {fileID: 2100000, guid: ae60f10dfbd5c4648aa0b7b84097b231, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: tooth
-    second: {fileID: 2100000, guid: f9dfc4d6a75ef324ba61865d0f50c0e7, type: 2}
+      name: skin_legB
+    second: {fileID: 2100000, guid: e3f6d11e3b0982a459c4211b718b3097, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_legC
+    second: {fileID: 2100000, guid: b063140206b86ec4d90b01d57280dd83, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin_tail
+    second: {fileID: 2100000, guid: 44aaac3707a3be049955e3f505e5fe00, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wingA
+    second: {fileID: 2100000, guid: 6509e473bd647c74f8592252ccc6faf9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wingB
+    second: {fileID: 2100000, guid: a6575548336106d4aac70a9ce14bd345, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wingC
+    second: {fileID: 2100000, guid: b9004d8218cc6bb468dd88ba9f831582, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wingD
+    second: {fileID: 2100000, guid: cc0d145b7911d72488264df58cc70fc8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
