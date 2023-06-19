@@ -10,13 +10,6 @@ public class Goku : CharacterController
     {
         //enemy = GameObject.Find("");
         //player = GameObject.Find("");
-        if (LayerMask.LayerToName(gameObject.layer) == "Player")
-        {
-            collisionLayer = LayerMask.GetMask("Enemy");
-        }
-        else collisionLayer = LayerMask.GetMask("Player");
-
-        hit_FX = GetHitEffect();
     }
 
     // Update is called once per frame

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class CharacterController : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class CharacterController : MonoBehaviour
 
     // Apply Dame
     public float health = 100f;
+    public float energy = 15f;
     private bool characterDied;
     private HealthUI health_UI;
     private HealthUI enemyHealthUI;
@@ -52,11 +54,14 @@ public class CharacterController : MonoBehaviour
         if (LayerMask.LayerToName(gameObject.layer) == "Player")
         {
             health_UI = GetComponent<HealthUI>();
+            collisionLayer = LayerMask.GetMask("Enemy");
         }
         else if (LayerMask.LayerToName(gameObject.layer) == "Enemy")
         {
             enemyHealthUI = GetComponent<HealthUI>();
+            collisionLayer = LayerMask.GetMask("Player");
         }
+        hit_FX = Resources.Load("HitEffect", typeof(GameObject)) as GameObject;
     }
 
     // Start is called before the first frame update
@@ -208,6 +213,10 @@ public class CharacterController : MonoBehaviour
             Movement();
             ComboAttacks();
         }
+        else if (ki.activeInHierarchy)
+        {
+            ApplyEnergy(5f);
+        }
         if (kiFull.activeInHierarchy || ki.activeInHierarchy)
         {
             if (GetComponent<Rigidbody>().velocity.y > 0)
@@ -224,13 +233,35 @@ public class CharacterController : MonoBehaviour
                     ki.gameObject.SetActive(true);
                 }
             }
+            // Ki opacity up and down
+            ParticleSystem[] kiStartColor = kiFull.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem kiColor in kiStartColor)
+            {
+                Color StartColor = kiColor.startColor;
+                float h, s, v;
+                Color.RGBToHSV(StartColor, out h, out s, out v);
+                if (v > (energy / 100f))
+                {
+                    v -= 0.1f * Time.deltaTime;
+                    if (v < 0.15)
+                    {
+                        kiFull.SetActive(false);
+                    }
+                }
+                else if (v < (energy / 100f) && v < 0.7f)
+                {
+                    v += 0.1f * Time.deltaTime;
+                }
+                Color newColor = Color.HSVToRGB(h, s, v);
+                kiColor.startColor = newColor;
+            }
         }
     }
 
-    protected GameObject GetHitEffect()
-    {
-        return Resources.Load("HitEffect", typeof(GameObject)) as GameObject;
-    }
+    //protected GameObject GetHitEffect()
+    //{
+    //    return Resources.Load("HitEffect", typeof(GameObject)) as GameObject;
+    //}
     void ComboAttacks()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -699,6 +730,25 @@ public class CharacterController : MonoBehaviour
                     playerAnim.SetTrigger("hit");
                 }
             }
+        }
+    }
+    public void ApplyEnergy(float charge)
+    {
+        energy += charge * Time.deltaTime;
+
+        if (LayerMask.LayerToName(gameObject.layer) == "Player")
+        {
+            health_UI.DisplayEnergy(energy, true);
+        }
+        else if (LayerMask.LayerToName(gameObject.layer) == "Enemy")
+        {
+            enemyHealthUI.DisplayEnergy(energy, false);
+        }
+
+        if (energy > 100f)
+        {
+            energy = 100f;
+            kiFull.SetActive(true);
         }
     }
     IEnumerator WaitForSecondTouchGround()
